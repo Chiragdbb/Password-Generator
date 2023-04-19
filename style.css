@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+input[type="range"] {
+	display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.strength-color{
+    height: 20px;
+    width: 20px;
+    background: gray;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.copy-text{
+    display: inline-block;
+    scale: 0;
+}
+
+.active{
+   scale: 1;
+}
+
