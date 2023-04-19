@@ -1,1 +1,3 @@
-This project contains a password genertor that is made using vanilla JS
+# Password Generator 
+###  Made using vanilla CSS and vanilla JS
+###   Live at GitHub Pages

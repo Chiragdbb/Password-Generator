@@ -8,7 +8,7 @@ const checkedSymbols = document.querySelector("#symbols");
 const passwordDisplay = document.querySelector("#password");
 const copy = document.querySelector("#copy");
 const copyPopup = document.querySelector(".copy-text");
-const strengthColor = document.querySelector(".strength-color");
+const showStrength = document.querySelectorAll(".strength");
 const checkedInputs = document.querySelectorAll("input[type=checkbox]");
 
 let password = "";
@@ -19,6 +19,18 @@ const symbols = "`~!@#$%^&*([]{'}\")_+=-,./<>?;:'";
 function handleSlider() {
 	passwordLength = range.value;
 	passLen.textContent = passwordLength;
+
+	// slider fill range
+	const min = range.min;
+	const max = range.max;
+	let rangePercent = ((range.value - min) / (max - min)) * 100;
+	range.style.background =
+		"linear-gradient(90deg, rgba(163,255,173,1)" +
+		rangePercent +
+		"%, rgba(25,24,32,1) " +
+		rangePercent +
+		"%)";
+
 	return passwordLength;
 }
 
@@ -52,11 +64,27 @@ function passStrength(str) {
 	let lowerPresent = false;
 	let numberPresent = false;
 	let symbolPresent = false;
+	
+	// strength color reset for new password
+	for (let i = 0; i <= 2; i++) {
+		showStrength[i].style.backgroundColor = "#23222a";
+	}
 
 	if (checkedUppercase.checked) upperPresent = true;
 	if (checkedLowerase.checked) lowerPresent = true;
 	if (checkedNumber.checked) numberPresent = true;
 	if (checkedSymbols.checked) symbolPresent = true;
+
+	// weak
+	if (str.length < 6 || (!numberPresent && !symbolPresent)) {
+		showStrength[0].style.backgroundColor = "#f74b4b";
+	}
+
+	//normal
+	if (str.length > 6 && str.length <= 12 && !symbolPresent) {
+		showStrength[0].style.backgroundColor = "#f8cb63";
+		showStrength[1].style.backgroundColor = "#f8cb63";
+	}
 
 	// strong
 	if (
@@ -66,17 +94,9 @@ function passStrength(str) {
 		symbolPresent &&
 		str.length >= 8
 	) {
-		strengthColor.style.backgroundColor = "green";
-	}
-
-	//normal
-	if (str.length > 6 && str.length < 12 && !symbolPresent) {
-		strengthColor.style.backgroundColor = "yellow";
-	}
-
-	// weak
-	if (str.length < 6 || (!numberPresent && !symbolPresent)) {
-		strengthColor.style.backgroundColor = "red";
+		showStrength[0].style.backgroundColor = "#a3ffae";
+		showStrength[1].style.backgroundColor = "#a3ffae";
+		showStrength[2].style.backgroundColor = "#a3ffae";
 	}
 }
 
@@ -137,6 +157,11 @@ generateBtn.addEventListener("click", () => {
 		password += funcArr[i]();
 	}
 
+	if (funcArr.length > handleSlider()) {
+		range.value = funcArr.length;
+		passLen.textContent = funcArr.length;
+	}
+
 	// rest of characters
 	if (funcArr.length !== 0) {
 		for (let i = 0; i < passwordLength - funcArr.length; i++) {
@@ -155,5 +180,4 @@ generateBtn.addEventListener("click", () => {
 
 	// strength check
 	passStrength(password);
-	
 });
