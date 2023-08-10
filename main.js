@@ -76,12 +76,12 @@ function passStrength(str) {
 	if (checkedSymbols.checked) symbolPresent = true;
 
 	// weak
-	if (str.length < 6 || (!numberPresent && !symbolPresent)) {
+	if (str.length <= 6 || (!numberPresent && !symbolPresent)) {
 		showStrength[0].style.backgroundColor = "#f74b4b";
 	}
 
 	//normal
-	if (str.length > 6 && str.length <= 12 && !symbolPresent) {
+	if (str.length > 6) {
 		showStrength[0].style.backgroundColor = "#f8cb63";
 		showStrength[1].style.backgroundColor = "#f8cb63";
 	}
